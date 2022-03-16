@@ -1,2 +1,2 @@
-# c-plus-plus-oop-programming
-C++ OOP Programming
+# cpp-oop-practic
+C++ OOP practice
