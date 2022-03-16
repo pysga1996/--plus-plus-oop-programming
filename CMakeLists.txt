@@ -1,22 +1,29 @@
 cmake_minimum_required(VERSION 3.16)
-project(oop)
+project(cpp-oop-practice)
 
 set(CMAKE_CXX_STANDARD 20)
 
-file(GLOB_RECURSE CLASS_AND_OBJECT_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "class-and-object/*.cpp")
-add_executable(class-and-object ${CLASS_AND_OBJECT_SOURCES})
+#Add the google test subdirectory
+add_subdirectory(lib/googletest)
 
-file(GLOB_RECURSE STATIC_FUNCTION_AND_VARIABLE_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "static-function-and-variable/*.cpp")
-add_executable(static-function-and-variable ${STATIC_FUNCTION_AND_VARIABLE_SOURCES})
+#include googletest/include dir
+include_directories(lib/googletest/googletest/include)
 
-file(GLOB_RECURSE ENCAPSULATION_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "encapsulation/*.cpp")
-add_executable(encapsulation ${ENCAPSULATION_SOURCES})
+#include the googlemock/include dir
+include_directories(lib/googletest/googlemock/include)
 
-file(GLOB_RECURSE INHERITANCE_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "inheritance/*.cpp")
-add_executable(inheritance ${INHERITANCE_SOURCES})
+include_directories(lib lib/cpp-commons/common-collection lib/cpp-commons/common-matrix lib/cpp-commons/common-number lib/cpp-commons/common-string lib/cpp-commons/common-util)
 
-file(GLOB_RECURSE POLYMORPHISM_AND_ABSTRACTION_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "polymorphism-and-abstraction/*.cpp")
-add_executable(polymorphism-and-abstraction ${POLYMORPHISM_AND_ABSTRACTION_SOURCES})
+link_directories(lib)
 
-file(GLOB_RECURSE OBJECT_RELATIONSHIP_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "object-relationship/*.cpp")
-add_executable(object-relationship ${OBJECT_RELATIONSHIP_SOURCES})
+file(GLOB_RECURSE CPP_OOP_PRACTICE_SOURCE RELATIVE ${CMAKE_SOURCE_DIR} src/*/*.cpp src/*/*.h)
+add_executable(cpp-oop-practice ${CPP_OOP_PRACTICE_SOURCE})
+
+file(GLOB_RECURSE CPP_OOP_PRACTICE_TEST RELATIVE ${CMAKE_SOURCE_DIR} src/*/*.cpp test/*.cpp test/*/*.cpp lib/*.h lib/*/*.h lib/*/*/*.h)
+add_executable(cpp-oop-practice-test ${CPP_OOP_PRACTICE_TEST})
+
+#Link with GoogleTest
+target_link_libraries(cpp-oop-practice-test gtest gtest_main cpp-commons)
+
+#Link with GoogleMock
+target_link_libraries(cpp-oop-practice-test gmock gmock_main cpp-commons)
